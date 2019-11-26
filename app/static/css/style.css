@@ -1,0 +1,44 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url('/static/fonts/GeosansLight.ttf');
+} 
+
+body, html {
+    font-family: myFirstFont;
+    height: 100%;
+    background-color:black;
+    overflow: hidden;
+}
+  
+.container {
+    z-index: 100000;
+    position: relative;
+    text-align: center;
+    color: white;
+    object-fit: cover;
+}
+
+.bottom {
+    position: absolute;
+    bottom: 8px;
+    background-color: black;
+    opacity: 0.5;
+}
+  
+.right {
+    border-radius: 25px;
+    padding: 10px;
+    right : 16px
+}
+
+.left {
+    border-radius: 5px;
+    padding: 1px;
+    left: 16px;
+}
+
+#photo {
+    height:100%;
+    width:inherit;
+    /*max-width: 100%;*/
+}

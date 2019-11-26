@@ -1,5 +1,5 @@
-config/config.json
-files.json
+app/config/config.json
+app/files.json
 .vscode
 
 # Python Gitignore Files
