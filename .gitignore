@@ -1,5 +1,6 @@
 config/config.json
 files.json
+.vscode
 
 # Python Gitignore Files
 # https://github.com/github/gitignore/blob/master/Python.gitignore
