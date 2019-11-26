@@ -1,4 +1,5 @@
 config/config.json
+files.json
 
 # Python Gitignore Files
 # https://github.com/github/gitignore/blob/master/Python.gitignore
