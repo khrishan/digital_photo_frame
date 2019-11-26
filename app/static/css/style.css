@@ -15,30 +15,22 @@ body, html {
     position: relative;
     text-align: center;
     color: white;
-    object-fit: cover;
-}
-
-.bottom {
-    position: absolute;
-    bottom: 8px;
-    background-color: black;
-    opacity: 0.5;
 }
   
-.right {
+.bottom-right {
     border-radius: 25px;
     padding: 10px;
-    right : 16px
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    background-color: black;
 }
 
-.left {
+.bottom-left {
     border-radius: 5px;
     padding: 1px;
+    position: absolute;
+    bottom: 8px;
     left: 16px;
-}
-
-#photo {
-    height:100%;
-    width:inherit;
-    /*max-width: 100%;*/
+    background-color: black;
 }
