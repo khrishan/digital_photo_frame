@@ -10,10 +10,10 @@ function loadPhoto() {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
 
-            var test = JSON.parse(this.responseText);
+            var data = JSON.parse(this.responseText);
 
-            document.getElementById('photo').src = test['link'];
-            document.getElementById('path').innerHTML = test['path'];
+            document.getElementById('photo').src = data['link'];
+            document.getElementById('path').innerHTML = data['path'];
         }
     };
     xhttp.open("GET", "/get_random_image", true);
