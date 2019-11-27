@@ -16,7 +16,7 @@ body, html {
     text-align: center;
     color: white;
 }
-  
+
 .bottom-right {
     border-radius: 25px;
     padding: 10px;
@@ -24,6 +24,7 @@ body, html {
     bottom: 8px;
     right: 16px;
     background-color: black;
+    opacity: 0.6;
 }
 
 .bottom-left {
@@ -33,4 +34,5 @@ body, html {
     bottom: 8px;
     left: 16px;
     background-color: black;
+    opacity: 0.6;
 }
