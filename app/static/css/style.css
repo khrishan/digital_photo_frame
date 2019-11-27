@@ -4,19 +4,16 @@
 } 
 
 body, html {
+    background-color:black;
+    color: white;
     font-family: myFirstFont;
     height: 100%;
-    background-color:black;
     overflow: hidden;
-    color: white;
     text-align: center;
 }
   
 .container {
-    
     position: relative;
-    /* height: 100%;
-    width: 100%; */
 }
 
 #photo {
@@ -24,24 +21,21 @@ body, html {
 }
 
 .bottom-left {
+    background-color: black;
     border-radius: 5px;
-    padding: 1px;
-    position: absolute;
     bottom: 8px;
     left: 16px;
-    background-color: black;
     opacity: 0.6;
-
+    padding: 1px;
+    position: absolute;
 }
 
 .bottom-right {
+    background-color: black;
     border-radius: 25px;
+    bottom: 8px;
+    opacity: 0.6;
     padding: 10px;
     position: absolute;
-    bottom: 8px;
     right: 16px;
-    background-color: black;
-    opacity: 0.6;
-    color: white;
-    text-align: center;
 }
