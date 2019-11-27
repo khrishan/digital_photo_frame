@@ -13,6 +13,8 @@ from utils.config import getConfig
 __CONFIG_LOC__ = 'config/config.json'
 config = getConfig(__CONFIG_LOC__)
 
+extensions = set()
+
 class ThreadClass(object):
     def __init__(self, interval=300):
         self.interval = interval
@@ -31,22 +33,22 @@ class ThreadClass(object):
             print('Image Pull Complete!')
 
 def resize_image(filename):
-    # Check to see which is bigger (width or height)
     img = Image.open(filename)
 
     file_type = os.path.splitext(filename)[-1]
-
     out_file = 'static/img/resized_image%s' % file_type
+
+    # Check to see which is bigger (width or height)
     
     if img.size[0] >= img.size[1] : # width > height
-        basewidth = 700
+        basewidth = config['screen_size']['width']
         
         wpercent = (basewidth / float(img.size[0]))
         hsize = int((float(img.size[1]) * float(wpercent)))
         img = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
         img.save(out_file)
     else:
-        baseheight = 500
+        baseheight = config['screen_size']['height']
         
         hpercent = (baseheight / float(img.size[1]))
         wsize = int((float(hpercent) * img.size[0]))
@@ -57,19 +59,53 @@ def resize_image(filename):
 
 def download_image(url):
     response = requests.get(url, stream=True)
+    
+    # Get file extension of image
     img_type = response.headers['Content-Type']
-
     img_type = img_type.replace('image/', '')
-
-    print(img_type)
 
     filename = 'static/img/background.%s' % img_type 
 
     with open(filename, 'wb') as out_file:
         shutil.copyfileobj(response.raw, out_file)
-    del response
 
     return resize_image(filename)
+
+def generate_return_data(path, data):
+    # Generate 'path' without the root folder, and filename
+    s_path = path.split('/')
+    del s_path[0]
+    del s_path[0]
+    del s_path[-1]
+
+    path = ''
+    for s in s_path:
+        path += s
+        path += '/'
+
+    filepath = download_image(data['link'])
+
+    return_data = {
+        "path" : path[:-1],
+        "link" : filepath
+    }
+
+    return json.dumps(return_data)
+
+def check_valid_file(file_json):
+    if file_json['.tag'] == 'folder':
+        return False
+                
+    # I have a 'hidden' folder in my dropbox image location which
+    # contains pictures I don't want to show in my photo frame.
+    if 'hidden' in file_json['path_lower']:
+        return False
+
+    __IGNORE_EXTENSIONS__ = {'.txt', '.docx', '.wmv', '.mp4', '.avi', '.mov', '.pptx', '.mpg', '.vscode'}
+
+    filename, file_extension = os.path.splitext(file_json['path_lower'])
+
+    return not file_extension in __IGNORE_EXTENSIONS__
 
 
 def get_list_files():
@@ -83,13 +119,12 @@ def get_list_files():
                 files_file.write(json.dumps(files))
 
             cursor = ''
-            print('Image Pull Complete!')
             return files
             
         elif cursor == '':
             url = 'https://api.dropboxapi.com/2/files/list_folder'
 
-            data = {"path": "/Photos",
+            data = {"path": config['dropbox_folder'],
                     "recursive": True,
                     "include_media_info": False,
                     "include_deleted": False,
@@ -109,36 +144,12 @@ def get_list_files():
         else:
             cursor = None
 
-        # TODO : Change to cycle through array rather than one long if
-
         if data['entries']:
             for d in data['entries']:
-                if d['.tag'] == 'folder':
-                    continue
+                if check_valid_file(d):
+                    if 'id' in d:
+                        files[d['id']] = d['path_lower']
 
-                if 'hidden' in d['path_lower']:
-                    continue
-
-                if '.mov' in d['path_lower']:
-                    continue
-                
-                if '.modd' in d['path_lower']:
-                    continue
-                
-                if '.wmv' in d['path_lower']:
-                    continue
-                
-                if '.mp4' in d['path_lower'] or '.avi' in d['path_lower']:
-                    continue
-                
-                if '.avi' in d['path_lower']:
-                    continue
-                
-                if 'id' in d:
-                    files[d['id']] = d['path_lower']
-                
-                if '.vscode' in d['path_lower'] or '.avi' in d['path_lower']:
-                    continue
 
 def get_random_file():
     with open(config['image_dict_path'], 'r') as f:
@@ -163,25 +174,4 @@ def get_random_file():
         
     data = json.loads(res.content.decode('utf-8'))
 
-    # TODO : Put this in another method
-    
-    test = path.split('/')
-    del test[0]
-    del test[0]
-    del test[-1]
-
-    path = ''
-    for s in test:
-        path += s
-        path += '/'
-
-    filepath = download_image(data['link'])
-    print(filepath)
-
-    return_data = {
-        "path" : path[:-1],
-        "link" : filepath
-    }
-
-    return json.dumps(return_data)
-
+    return generate_return_data(path, data)
