@@ -1,7 +1,10 @@
 import json
 import os
+import PIL
+from PIL import Image
 import random
 import requests
+import shutil
 import time
 import threading
 
@@ -26,7 +29,49 @@ class ThreadClass(object):
             time.sleep(self.interval)
 
             print('Image Pull Complete!')
-  
+
+def resize_image(filename):
+    # Check to see which is bigger (width or height)
+    img = Image.open(filename)
+
+    file_type = os.path.splitext(filename)[-1]
+
+    out_file = 'static/img/resized_image%s' % file_type
+    
+    if img.size[0] >= img.size[1] : # width > height
+        basewidth = 700
+        
+        wpercent = (basewidth / float(img.size[0]))
+        hsize = int((float(img.size[1]) * float(wpercent)))
+        img = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
+        img.save(out_file)
+    else:
+        baseheight = 500
+        
+        hpercent = (baseheight / float(img.size[1]))
+        wsize = int((float(hpercent) * img.size[0]))
+        img = img.resize((wsize, baseheight), PIL.Image.ANTIALIAS)
+        img.save(out_file)
+    
+    return out_file
+
+def download_image(url):
+    response = requests.get(url, stream=True)
+    img_type = response.headers['Content-Type']
+
+    img_type = img_type.replace('image/', '')
+
+    print(img_type)
+
+    filename = 'static/img/background.%s' % img_type 
+
+    with open(filename, 'wb') as out_file:
+        shutil.copyfileobj(response.raw, out_file)
+    del response
+
+    return resize_image(filename)
+
+
 def get_list_files():
     cursor = ''
     files = {}
@@ -130,9 +175,12 @@ def get_random_file():
         path += s
         path += '/'
 
+    filepath = download_image(data['link'])
+    print(filepath)
+
     return_data = {
         "path" : path[:-1],
-        "link" : data['link']
+        "link" : filepath
     }
 
     return json.dumps(return_data)

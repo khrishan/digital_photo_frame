@@ -8,23 +8,19 @@ body, html {
     height: 100%;
     background-color:black;
     overflow: hidden;
+    color: white;
+    text-align: center;
 }
   
 .container {
-    z-index: 100000;
+    
     position: relative;
-    text-align: center;
-    color: white;
+    /* height: 100%;
+    width: 100%; */
 }
 
-.bottom-right {
-    border-radius: 25px;
-    padding: 10px;
-    position: absolute;
-    bottom: 8px;
-    right: 16px;
-    background-color: black;
-    opacity: 0.6;
+#photo {
+    z-index: -1;
 }
 
 .bottom-left {
@@ -35,4 +31,17 @@ body, html {
     left: 16px;
     background-color: black;
     opacity: 0.6;
+
+}
+
+.bottom-right {
+    border-radius: 25px;
+    padding: 10px;
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    background-color: black;
+    opacity: 0.6;
+    color: white;
+    text-align: center;
 }
