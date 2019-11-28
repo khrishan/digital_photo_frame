@@ -78,7 +78,7 @@ def download_image(url):
 def generate_return_data(path, data):
     # Generate 'path' without the root folder, and filename
     basename = os.path.basename(path)
-    root_dir = config['dropbox_folder']
+    root_dir = config['dropbox_folder'].lower()
 
     path = path.replace(basename, '')
     path = path.replace(root_dir, '')
