@@ -87,8 +87,8 @@ def generate_return_data(path, data):
     filepath = download_image(data['link'])
 
     return_data = {
-        "path" : path[:-1],
-        "link" : filepath
+        'path' : path[:-1],
+        'link' : filepath
     }
 
     return json.dumps(return_data)
@@ -125,16 +125,16 @@ def get_list_files():
         elif cursor == '':
             url = 'https://api.dropboxapi.com/2/files/list_folder'
 
-            data = {"path": config['dropbox_folder'],
-                    "recursive": True,
-                    "include_media_info": False,
-                    "include_deleted": False,
-                    "include_mounted_folders": True
+            data = {'path': config['dropbox_folder'],
+                    'recursive': True,
+                    'include_media_info': False,
+                    'include_deleted': False,
+                    'include_mounted_folders': True
                     }
         else:
             url = 'https://api.dropboxapi.com/2/files/list_folder/continue'
 
-            data = {"cursor": cursor}
+            data = {'cursor': cursor}
 
         res = requests.post(url, headers={'Content-Type':'application/json', 'Authorization': 'Bearer {}'.format(config['access_token'])}, data=json.dumps(data))
         
@@ -167,7 +167,7 @@ def get_random_file():
 
     url = 'https://api.dropboxapi.com/2/files/get_temporary_link'
 
-    data = {"path": path }
+    data = {'path': path }
 
     print(path)
 
