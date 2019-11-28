@@ -37,7 +37,7 @@ def resize_image(filename):
     img = Image.open(filename)
 
     file_type = os.path.splitext(filename)[-1]
-    out_file = 'static/img/resized_image%s' % file_type
+    out_file = 'static/img/resized_image{}'.format(file_type)
 
     # Check to see which is bigger (width or height)
     
@@ -65,7 +65,7 @@ def download_image(url):
     img_type = response.headers['Content-Type']
     img_type = img_type.replace('image/', '')
 
-    filename = 'static/img/background.%s' % img_type 
+    filename = 'static/img/background.{}'.format(img_type) 
 
     with open(filename, 'wb') as out_file:
         shutil.copyfileobj(response.raw, out_file)
