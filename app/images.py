@@ -104,7 +104,7 @@ def check_valid_file(file_json):
 
     __IGNORE_EXTENSIONS__ = {'.txt', '.docx', '.wmv', '.mp4', '.avi', '.mov', '.pptx', '.mpg', '.vscode'}
 
-    filename, file_extension = os.path.splitext(file_json['path_lower'])
+    _, file_extension = os.path.splitext(file_json['path_lower'])
 
     return not file_extension in __IGNORE_EXTENSIONS__
 
