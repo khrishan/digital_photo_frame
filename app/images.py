@@ -1,12 +1,13 @@
 import json
 import os
-import PIL
-from PIL import Image
 import random
-import requests
 import shutil
 import time
 import threading
+
+import PIL
+from PIL import Image
+import requests
 
 from utils.config import getConfig
 
