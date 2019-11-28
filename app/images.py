@@ -61,14 +61,18 @@ def resize_image(filename):
     
     return out_file
 
-def download_image(url):
+def download_image(id, url):
     response = requests.get(url, stream=True)
     
     # Get file extension of image
     img_type = response.headers['Content-Type']
     img_type = img_type.replace('image/', '')
+    
+    root_dir = 'static/img/tmp'
+    shutil.rmtree(root_dir, ignore_errors=True)
+    os.makedirs(root_dir)
 
-    filename = 'static/img/background.{}'.format(img_type) 
+    filename = '{}/{}.{}'.format(root_dir, id, img_type) 
 
     with open(filename, 'wb') as out_file:
         shutil.copyfileobj(response.raw, out_file)
@@ -83,7 +87,7 @@ def generate_return_data(path, data):
     path = path.replace(basename, '')
     path = path.replace(root_dir, '')
 
-    filepath = download_image(data['link'])
+    filepath = download_image(data['metadata']['id'], data['link'])
 
     return_data = {
         'path' : path,
