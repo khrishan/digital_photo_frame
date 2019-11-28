@@ -40,21 +40,24 @@ def resize_image(filename):
     out_file = 'static/img/resized_image{}'.format(file_type)
 
     # Check to see which is bigger (width or height)
-    
-    if img.size[0] >= img.size[1] : # width > height
-        basewidth = config['screen_size']['width']
-        
-        wpercent = (basewidth / float(img.size[0]))
-        hsize = int((float(img.size[1]) * float(wpercent)))
-        img = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
-        img.save(out_file)
+
+    scale = [
+        float(img.size[0]) / float(config['screen_size']['width']),
+        float(img.size[1]) / float(config['screen_size']['height'])
+    ]
+
+    if scale[0] >= scale[1]:
+        percent = 1.0 / scale[0]
     else:
-        baseheight = config['screen_size']['height']
-        
-        hpercent = (baseheight / float(img.size[1]))
-        wsize = int((float(hpercent) * img.size[0]))
-        img = img.resize((wsize, baseheight), PIL.Image.ANTIALIAS)
-        img.save(out_file)
+        percent = 1.0 / scale[1]
+
+    new_size = (
+        int(float(img.size[0]) * percent),
+        int(float(img.size[1]) * percent)
+    )
+
+    img = img.resize(new_size, PIL.Image.ANTIALIAS)
+    img.save(out_file)
     
     return out_file
 
