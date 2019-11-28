@@ -77,20 +77,16 @@ def download_image(url):
 
 def generate_return_data(path, data):
     # Generate 'path' without the root folder, and filename
-    s_path = path.split('/')
-    del s_path[0]
-    del s_path[0]
-    del s_path[-1]
+    basename = os.path.basename(path)
+    root_dir = config['dropbox_folder']
 
-    path = ''
-    for s in s_path:
-        path += s
-        path += '/'
+    path = path.replace(basename, '')
+    path = path.replace(root_dir, '')
 
     filepath = download_image(data['link'])
 
     return_data = {
-        'path' : path[:-1],
+        'path' : path,
         'link' : filepath
     }
 
