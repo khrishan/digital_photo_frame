@@ -36,9 +36,6 @@ class ThreadClass(object):
 def resize_image(filename):
     img = Image.open(filename)
 
-    file_type = os.path.splitext(filename)[-1]
-    out_file = 'static/img/resized_image{}'.format(file_type)
-
     # Check to see which is bigger (width or height)
 
     scale = [
@@ -57,9 +54,9 @@ def resize_image(filename):
     )
 
     img = img.resize(new_size, PIL.Image.ANTIALIAS)
-    img.save(out_file)
+    img.save(filename)
     
-    return out_file
+    return filename
 
 def download_image(url):
     response = requests.get(url, stream=True)
