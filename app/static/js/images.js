@@ -1,5 +1,5 @@
-var photoTimer = 30000;
-var clockTimer = 1000;
+var photoTimer = 30 * 1000;
+var clockTimer = 1 * 1000;
 
 setInterval(loadPhoto, photoTimer);
 
