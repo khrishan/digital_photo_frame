@@ -4,33 +4,40 @@
 } 
 
 body, html {
+    background-color:black;
+    color: white;
     font-family: myFirstFont;
     height: 100%;
-    background-color:black;
     overflow: hidden;
+    text-align: center;
+    margin: 0;
+    padding: 0;
 }
   
 .container {
-    z-index: 100000;
     position: relative;
-    text-align: center;
-    color: white;
 }
-  
-.bottom-right {
-    border-radius: 25px;
-    padding: 10px;
-    position: absolute;
-    bottom: 8px;
-    right: 16px;
-    background-color: black;
+
+#photo {
+    z-index: -1;
 }
 
 .bottom-left {
+    background-color: black;
     border-radius: 5px;
-    padding: 1px;
-    position: absolute;
     bottom: 8px;
     left: 16px;
+    opacity: 0.6;
+    padding: 1px;
+    position: absolute;
+}
+
+.bottom-right {
     background-color: black;
+    border-radius: 25px;
+    bottom: 8px;
+    opacity: 0.6;
+    padding: 10px;
+    position: absolute;
+    right: 16px;
 }

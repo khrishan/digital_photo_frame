@@ -1,4 +1,9 @@
 {
     "access_token" : "[ACCESS TOKEN]",
-    "image_dict_path" : "[FILEPATH FOR IMAGES DICTIONARY]"
+    "image_dict_path" : "[FILEPATH FOR IMAGES DICTIONARY]",
+    "dropbox_folder" : "[FOLDER IN DROPBOX WITH IMAGES]",
+    "screen_size" : {
+        "width" : 500,
+        "height": 700
+    }
 }
