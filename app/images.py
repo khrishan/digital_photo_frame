@@ -34,7 +34,6 @@ class ThreadClass(object):
             print('Image Pull Complete!')
 
 def resize_image(filename):
-    print(filename)
     img = Image.open(filename)
 
     file_type = os.path.splitext(filename)[-1]
