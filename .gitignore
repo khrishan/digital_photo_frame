@@ -1,7 +1,6 @@
 app/config/config.json
 app/files.json
-app/static/img/background.*
-app/static/img/resized_image.*
+app/static/img/tmp
 .vscode
 
 # Python Gitignore Files
